@@ -55,7 +55,7 @@ class SilexSessionHelper
             }
         } else {
             $app['session']->set('projectId', '');
-            throw new UserUnauthorizedException("Project does not exist on this site.");
+            throw new ResourceNotAvailableException("Project does not exist on this site.");
         }
         return $projectId;
     }
@@ -77,7 +77,7 @@ class SilexSessionHelper
             }
         } else {
             $app['session']->set('projectId', '');
-            throw new UserUnauthorizedException("Login required to access this project.");
+            throw new UserNotAuthenticatedException("Login required to access this project.");
         }
         return $projectId;
     }

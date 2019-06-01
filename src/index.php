@@ -38,7 +38,7 @@ if (defined('ENVIRONMENT')) {
 
         case 'testing':
         case 'production':
-            BugsnagExceptionHandler::setup($app, BUGSNAG_API_KEY);
+            // BugsnagExceptionHandler::setup($app, BUGSNAG_API_KEY);
             error_reporting(0);
             $app['debug'] = false;
             break;

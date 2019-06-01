@@ -698,6 +698,7 @@ class Sf
 
     public function lex_dbeDtoUpdatesOnly($browserId, $lastFetchTime = null)
     {
+        throw new Exception('This is an exception');
         $sessionLabel = 'lexDbeFetch_' . $browserId;
         if ($lastFetchTime == null) {
             $lastFetchTime = $this->app['session']->get($sessionLabel);

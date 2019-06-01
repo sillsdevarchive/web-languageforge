@@ -26,8 +26,14 @@ class App extends Base
         /** @noinspection PhpUnusedParameterInspection */
         Request $request, Application $app, $appName, $projectId = ''
     ) {
-        $this->setupBaseVariables($app);
-        $this->setupAngularAppVariables($app, $appName, $projectId);
+        try {
+            $this->setupBaseVariables($app);
+            $this->setupAngularAppVariables($app, $appName, $projectId);
+        } catch (UserUnauthorizedException $e) {
+            return $app->redirect('/app/projects');
+        } catch (UserNotAuthenticatedException $e) {
+            return $app->redirect('/app/login');
+        }
         return $this->renderPage($app, 'angular-app');
     }
 
