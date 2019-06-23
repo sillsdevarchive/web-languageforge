@@ -54,7 +54,7 @@ describe('Lexicon E2E Configuration Fields', () => {
     expect<any>(configPage.applyButton.isEnabled()).toBe(false);
     configPage.unifiedPane.observerCheckbox('English').click();
     expect<any>(configPage.applyButton.isEnabled()).toBe(true);
-    configPage.unifiedPane.observerCheckbox('English').click();
+    configPage.unifiedPane.resetInputSystemButton('observer').click();
     expect<any>(configPage.applyButton.isEnabled()).toBe(false);
   });
 
@@ -69,31 +69,24 @@ describe('Lexicon E2E Configuration Fields', () => {
       const rowLabel = new RegExp('^Pictures$');
       expect<any>(configPage.unifiedPane.fieldSpecificButton(rowLabel).isDisplayed()).toBe(true);
       expect<any>(configPage.unifiedPane.fieldSpecificIcon(rowLabel).getAttribute('class'))
-        .toEqual('fa fa-check-square-o');
-      expect<any>(configPage.unifiedPane.useFieldSpecificInputSystemsCheckbox(rowLabel).isPresent()).toBe(false);
+        .toEqual('fa fa-chevron-down');
       configPage.unifiedPane.fieldSpecificButton(rowLabel).click();
-      expect<any>(configPage.unifiedPane.useFieldSpecificInputSystemsCheckbox(rowLabel).isDisplayed()).toBe(true);
       expect<any>(configPage.unifiedPane.fieldSpecificCaptionHiddenIfEmptyCheckbox(rowLabel).isDisplayed()).toBe(true);
       configPage.unifiedPane.fieldSpecificButton(rowLabel).click();
-      expect<any>(configPage.unifiedPane.useFieldSpecificInputSystemsCheckbox(rowLabel).isPresent()).toBe(false);
+      expect<any>(configPage.unifiedPane.fieldSpecificCaptionHiddenIfEmptyCheckbox(rowLabel).isPresent()).toBe(false);
     });
 
     it('check sense field-specific settings', () => {
       const rowLabel = new RegExp('^Scientific Name$');
       expect<any>(configPage.unifiedPane.fieldSpecificButton(rowLabel).isDisplayed()).toBe(true);
       expect<any>(configPage.unifiedPane.fieldSpecificIcon(rowLabel).getAttribute('class'))
-        .toEqual('fa fa-check-square-o');
-      expect<any>(configPage.unifiedPane.useFieldSpecificInputSystemsCheckbox(rowLabel).isPresent()).toBe(false);
+        .toEqual('fa fa-chevron-down');
       configPage.unifiedPane.fieldSpecificButton(rowLabel).click();
       expect<any>(configPage.unifiedPane.fieldSpecificCaptionHiddenIfEmptyCheckbox(rowLabel).isPresent()).toBe(false);
-      expect<any>(configPage.unifiedPane.useFieldSpecificInputSystemsCheckbox(rowLabel).isDisplayed()).toBe(true);
-      expect<any>(configPage.unifiedPane.useFieldSpecificInputSystemsCheckbox(rowLabel).isSelected()).toBe(true);
-      util.setCheckbox(configPage.unifiedPane.useFieldSpecificInputSystemsCheckbox(rowLabel), false);
       configPage.unifiedPane.fieldSpecificButton(rowLabel).click();
       expect<any>(configPage.unifiedPane.fieldSpecificIcon(rowLabel).getAttribute('class'))
         .toEqual('fa fa-chevron-down');
       configPage.unifiedPane.fieldSpecificButton(rowLabel).click();
-      util.setCheckbox(configPage.unifiedPane.useFieldSpecificInputSystemsCheckbox(rowLabel), true);
       util.setCheckbox(configPage.unifiedPane.sense.fieldSpecificInputSystemCheckbox(rowLabel, 1), true);
       expect<any>(configPage.unifiedPane.sense.fieldSpecificInputSystemCheckbox(rowLabel, 0).isSelected()).toBe(true);
       expect<any>(configPage.unifiedPane.sense.fieldSpecificInputSystemCheckbox(rowLabel, 1).isSelected()).toBe(true);
@@ -190,9 +183,6 @@ describe('Lexicon E2E Configuration Fields', () => {
     it('can fully function "Select All" down the Input System observer column', () => {
       const column = 'observer';
       const rowLabel = 'English';
-      util.setCheckbox(configPage.unifiedPane.observerCheckbox(rowLabel), true);
-      expect<any>(configPage.unifiedPane.inputSystem.selectAll.observer.isSelected()).toBe(false);
-      util.setCheckbox(configPage.unifiedPane.inputSystem.selectAll.observer, true);
       expect<any>(configPage.unifiedPane.inputSystem.selectAll.observer.isSelected()).toBe(true);
       expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), true))
         .toBe(true);
@@ -210,6 +200,14 @@ describe('Lexicon E2E Configuration Fields', () => {
       expect<any>(configPage.unifiedPane.inputSystem.selectAll.observer.isSelected()).toBe(false);
       expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), false))
         .toBe(true);
+      util.setCheckbox(configPage.unifiedPane.observerCheckbox(rowLabel), true);
+      expect<any>(configPage.unifiedPane.inputSystem.selectAll.observer.isSelected()).toBe(false);
+      expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), true))
+        .toBe(false);
+      expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), false))
+        .toBe(false);
+      util.setCheckbox(configPage.unifiedPane.inputSystem.selectAll.observer, true);
+      expect<any>(configPage.unifiedPane.inputSystem.selectAll.observer.isSelected()).toBe(true);
     });
 
     it('can select and de-select all down the Input System commenter column', () => {
