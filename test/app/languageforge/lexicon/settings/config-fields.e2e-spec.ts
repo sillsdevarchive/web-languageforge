@@ -588,6 +588,7 @@ describe('Lexicon E2E Configuration Fields', () => {
     it('can add a second member-specific user settings', () => {
       const rowLabel = 'English';
       configPage.unifiedPane.entry.addGroupButton.click();
+      browser.wait(configPage.unifiedPane.addGroupModal.usernameTypeaheadInput.isDisplayed(), 500);
       expect<any>(configPage.unifiedPane.addGroupModal.usernameTypeaheadInput.isDisplayed()).toBe(true);
       configPage.unifiedPane.addGroupModal.usernameTypeaheadInput.clear();
       configPage.unifiedPane.addGroupModal.usernameTypeaheadInput
@@ -698,6 +699,7 @@ describe('Lexicon E2E Configuration Fields', () => {
     it('can open the custom field modal for an entry', () => {
       expect<any>(configPage.unifiedPane.entry.addCustomEntryButton.isEnabled()).toBe(true);
       configPage.unifiedPane.entry.addCustomEntryButton.click();
+      browser.wait(configPage.modal.customField.displayNameInput.isDisplayed(), 500);
       expect<any>(configPage.modal.customField.displayNameInput.isDisplayed()).toBe(true);
       expect<any>(configPage.modal.customField.typeDropdown.isDisplayed()).toBe(true);
       expect<any>(configPage.modal.customField.listCodeDropdown.isPresent()).toBe(false);
