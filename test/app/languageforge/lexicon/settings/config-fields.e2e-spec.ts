@@ -212,10 +212,6 @@ describe('Lexicon E2E Configuration Fields', () => {
 
     it('can select and de-select all down the Input System commenter column', () => {
       const column = 'commenter';
-      expect<any>(configPage.unifiedPane.inputSystem.selectAll.commenter.isSelected()).toBe(false);
-      expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), false))
-        .toBe(true);
-      util.setCheckbox(configPage.unifiedPane.inputSystem.selectAll.commenter, true);
       expect<any>(configPage.unifiedPane.inputSystem.selectAll.commenter.isSelected()).toBe(true);
       expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), true))
         .toBe(true);
@@ -223,14 +219,14 @@ describe('Lexicon E2E Configuration Fields', () => {
       expect<any>(configPage.unifiedPane.inputSystem.selectAll.commenter.isSelected()).toBe(false);
       expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), false))
         .toBe(true);
+      util.setCheckbox(configPage.unifiedPane.inputSystem.selectAll.commenter, true);
+      expect<any>(configPage.unifiedPane.inputSystem.selectAll.commenter.isSelected()).toBe(true);
+      expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), true))
+        .toBe(true);
     });
 
     it('can select and de-select all down the Input System contributor column', () => {
       const column = 'contributor';
-      expect<any>(configPage.unifiedPane.inputSystem.selectAll.contributor.isSelected()).toBe(false);
-      expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), false))
-        .toBe(true);
-      util.setCheckbox(configPage.unifiedPane.inputSystem.selectAll.contributor, true);
       expect<any>(configPage.unifiedPane.inputSystem.selectAll.contributor.isSelected()).toBe(true);
       expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), true))
         .toBe(true);
@@ -238,20 +234,24 @@ describe('Lexicon E2E Configuration Fields', () => {
       expect<any>(configPage.unifiedPane.inputSystem.selectAll.contributor.isSelected()).toBe(false);
       expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), false))
         .toBe(true);
+      util.setCheckbox(configPage.unifiedPane.inputSystem.selectAll.contributor, true);
+      expect<any>(configPage.unifiedPane.inputSystem.selectAll.contributor.isSelected()).toBe(true);
+      expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), true))
+        .toBe(true);
     });
 
     it('can select and de-select all down the Input System manager column', () => {
       const column = 'manager';
-      expect<any>(configPage.unifiedPane.inputSystem.selectAll.manager.isSelected()).toBe(false);
-      expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), false))
-        .toBe(true);
-      util.setCheckbox(configPage.unifiedPane.inputSystem.selectAll.manager, true);
       expect<any>(configPage.unifiedPane.inputSystem.selectAll.manager.isSelected()).toBe(true);
       expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), true))
         .toBe(true);
       util.setCheckbox(configPage.unifiedPane.inputSystem.selectAll.manager, false);
       expect<any>(configPage.unifiedPane.inputSystem.selectAll.manager.isSelected()).toBe(false);
       expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), false))
+        .toBe(true);
+      util.setCheckbox(configPage.unifiedPane.inputSystem.selectAll.manager, true);
+      expect<any>(configPage.unifiedPane.inputSystem.selectAll.manager.isSelected()).toBe(true);
+      expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), true))
         .toBe(true);
     });
 
