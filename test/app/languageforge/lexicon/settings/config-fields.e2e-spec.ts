@@ -556,6 +556,7 @@ describe('Lexicon E2E Configuration Fields', () => {
     it('can add a member-specific user settings', () => {
       expect<any>(configPage.unifiedPane.inputSystem.selectAll.groups().count()).toEqual(0);
       configPage.unifiedPane.entry.addGroupButton.click();
+      browser.wait(configPage.unifiedPane.addGroupModal.usernameTypeaheadInput.isDisplayed(), 500);
       expect<any>(configPage.unifiedPane.addGroupModal.usernameTypeaheadInput.isDisplayed()).toBe(true);
       expect<any>(configPage.unifiedPane.addGroupModal.usernameTypeaheadResults.count()).toEqual(0);
       expect<any>(configPage.unifiedPane.addGroupModal.addMemberSpecificSettingsButton.isDisplayed()).toBe(true);
@@ -572,6 +573,7 @@ describe('Lexicon E2E Configuration Fields', () => {
     it('cannot add the same member-specific user settings', () => {
       expect<any>(configPage.unifiedPane.inputSystem.selectAll.groups().count()).toEqual(1);
       configPage.unifiedPane.entry.addGroupButton.click();
+      browser.wait(configPage.unifiedPane.addGroupModal.usernameTypeaheadInput.isDisplayed(), 500);
       expect<any>(configPage.unifiedPane.addGroupModal.usernameTypeaheadInput.isDisplayed()).toBe(true);
       configPage.unifiedPane.addGroupModal.usernameTypeaheadInput.sendKeys('a');
       expect<any>(configPage.unifiedPane.addGroupModal.usernameTypeaheadResults.count()).toEqual(5);
