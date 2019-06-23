@@ -472,7 +472,7 @@ describe('Lexicon E2E Configuration Fields', () => {
     it('can fully function "Select All" along an Input System row', () => {
       const rowLabel = new RegExp('^Thai$');
       expect<any>(configPage.unifiedPane.rowCheckboxes(rowLabel).count()).toEqual(5);
-      util.setCheckbox(configPage.unifiedPane.commenterCheckbox(rowLabel), true);
+      util.setCheckbox(configPage.unifiedPane.commenterCheckbox(rowLabel), false);
       expect<any>(configPage.unifiedPane.selectRowCheckbox(rowLabel).isSelected()).toBe(false);
       util.setCheckbox(configPage.unifiedPane.selectRowCheckbox(rowLabel), true);
       expect<any>(configPage.unifiedPane.selectRowCheckbox(rowLabel).isSelected()).toBe(true);
