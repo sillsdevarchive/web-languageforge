@@ -208,6 +208,7 @@ describe('Lexicon E2E Configuration Fields', () => {
         .toBe(false);
       util.setCheckbox(configPage.unifiedPane.inputSystem.selectAll.observer, true);
       expect<any>(configPage.unifiedPane.inputSystem.selectAll.observer.isSelected()).toBe(true);
+      configPage.unifiedPane.resetInputSystemButton('observer').click();
     });
 
     it('can select and de-select all down the Input System commenter column', () => {
@@ -223,6 +224,7 @@ describe('Lexicon E2E Configuration Fields', () => {
       expect<any>(configPage.unifiedPane.inputSystem.selectAll.commenter.isSelected()).toBe(true);
       expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), true))
         .toBe(true);
+      configPage.unifiedPane.resetInputSystemButton('commenter').click();
     });
 
     it('can select and de-select all down the Input System contributor column', () => {
@@ -238,6 +240,7 @@ describe('Lexicon E2E Configuration Fields', () => {
       expect<any>(configPage.unifiedPane.inputSystem.selectAll.contributor.isSelected()).toBe(true);
       expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), true))
         .toBe(true);
+      configPage.unifiedPane.resetInputSystemButton('contributor').click();
     });
 
     it('can select and de-select all down the Input System manager column', () => {
@@ -253,6 +256,7 @@ describe('Lexicon E2E Configuration Fields', () => {
       expect<any>(configPage.unifiedPane.inputSystem.selectAll.manager.isSelected()).toBe(true);
       expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes(column), true))
         .toBe(true);
+      configPage.unifiedPane.resetInputSystemButton('manager').click();
     });
 
     it('can de-select and select all down the entry observer column', () => {
@@ -485,6 +489,10 @@ describe('Lexicon E2E Configuration Fields', () => {
       expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.rowCheckboxes(rowLabel), true)).toBe(true);
       util.setCheckbox(configPage.unifiedPane.selectRowCheckbox(rowLabel), false);
       expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.rowCheckboxes(rowLabel), false)).toBe(true);
+      configPage.unifiedPane.resetInputSystemButton('observer').click();
+      configPage.unifiedPane.resetInputSystemButton('commenter').click();
+      configPage.unifiedPane.resetInputSystemButton('contributor').click();
+      configPage.unifiedPane.resetInputSystemButton('manager').click();
     });
 
     it('can fully function "Select All" along an entry row', () => {
@@ -665,11 +673,15 @@ describe('Lexicon E2E Configuration Fields', () => {
     });
 
     it('can remove member-specific user settings', () => {
+      configPage.unifiedPane.resetInputSystemButton('observer').click();
+      configPage.unifiedPane.resetInputSystemButton('commenter').click();
+      configPage.unifiedPane.resetInputSystemButton('contributor').click();
+      configPage.unifiedPane.resetInputSystemButton('manager').click();
       configPage.unifiedPane.entry.removeGroupButton(0).click();
       expect<any>(configPage.unifiedPane.inputSystem.selectAll.groups().count()).toEqual(1);
       configPage.unifiedPane.entry.removeGroupButton(0).click();
       expect<any>(configPage.unifiedPane.inputSystem.selectAll.groups().count()).toEqual(0);
-      expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes('select-row'), false))
+      expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.inputSystem.columnCheckboxes('select-row'), true))
         .toBe(true);
       expect<any>(Utils.isAllCheckboxes(configPage.unifiedPane.entry.columnCheckboxes('select-row'), true))
         .toBe(true);
