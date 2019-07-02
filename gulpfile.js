@@ -683,7 +683,7 @@ gulp.task('test-e2e-doTest', function (cb) {
   var specString = (params.specs) ? params.specs : '*';
   var specs = ['test/app/allspecs/**/*.e2e-spec.js'];
   if (specString === '*') {
-    specs.push('test/app/bellows/**/*-traversal.e2e-spec.js');
+    specs.push('web-languageforge/test/app/bellows/**/*-traversal.e2e-spec.js');
     if (params.webserverHost.includes('languageforge')) {
       specs.push('test/app/languageforge/**/*.e2e-spec.js');
     } else {
