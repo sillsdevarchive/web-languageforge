@@ -685,7 +685,7 @@ gulp.task('test-e2e-doTest', function (cb) {
   if (specString === '*') {
     specs.push('test/app/bellows/**/*-traversal.e2e-spec.js');
     if (params.webserverHost.includes('languageforge')) {
-      specs.push('test/app/languageforge/*.e2e-spec.js');
+      specs.push('test/app/languageforge/**/*.e2e-spec.js');
     } else {
       specs.push('test/app/scriptureforge/**/*-traversal.e2e-spec.js');
     }
@@ -710,6 +710,7 @@ gulp.task('test-e2e-doTest', function (cb) {
   }
 
   // It's better to pass the specs array of files to test, and not use the --exclude parameter
+  console.log(__dirname);
   console.log('specs: ', specs);
   return gulp.src(specs)
     .pipe(protractor(protractorOptions))
