@@ -1241,7 +1241,6 @@ gulp.task('build-e2e',
     'build-upload',
     'test-e2e-clean-compile',
     'test-e2e-env',
-    'test-restart-webserver',
     'test-e2e-setupTestEnvironment',
     'test-e2e-doTest' // HERE2
   )
