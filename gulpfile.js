@@ -767,7 +767,7 @@ gulp.task('test-e2e-teardownForLocalDev', gulp.series(
 // -------------------------------------
 //   Task: E2E Test: Run
 // -------------------------------------
-gulp.task('test-e2e-run',
+gulp.task('test-e2e-run', //HERE
   gulp.series(
     'test-e2e-clean-compile',
     'test-e2e-useTestConfig',
@@ -1182,9 +1182,8 @@ gulp.task('build',
     ),
     'sass',
     'build-webpack',
-    'build-minify',
-    'build-changeGroup',
-    'test-e2e-clean-compile'
+    'build-minify', // TODO: Review if this is necessary (CJH)
+    'build-changeGroup' // TODO: Review if this is necessary (CJH)
   )
 );
 
@@ -1240,9 +1239,11 @@ gulp.task('build-e2e',
     'test-e2e-useTestConfig',
     'build',
     'build-upload',
+    'test-e2e-clean-compile',
     'test-e2e-env',
+    'test-restart-webserver',
     'test-e2e-setupTestEnvironment',
-    'test-e2e-doTest'
+    'test-e2e-doTest' // HERE2
   )
 );
 gulp.task('build-e2e').description =
