@@ -11,10 +11,12 @@ class LexRoles extends ProjectRoles
     const OBSERVER = 'observer';
     const OBSERVER_WITH_COMMENT = 'observer_with_comment';
 
+
     public static function getRolesList() {
         $roles = ProjectRoles::getRolesList();
         $roles[self::OBSERVER] = 'Observer';
         $roles[self::OBSERVER_WITH_COMMENT] = 'Observer with comment';
+        $roles['tech_support'] = 'Tech support';
         return $roles;
     }
 
@@ -52,6 +54,8 @@ class LexRoles extends ProjectRoles
         $rights[] = Domain::USERS + Operation::VIEW;
         self::grantAllOnDomain($rights, Domain::ENTRIES);
         self::$_rights[self::MANAGER] = $rights;
+        self::$_rights[self::TECH_SUPPORT] = $rights;
+
     }
 
     private static $_rights;
