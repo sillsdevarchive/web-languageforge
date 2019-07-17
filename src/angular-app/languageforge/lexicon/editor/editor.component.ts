@@ -293,6 +293,7 @@ export class LexiconEditorController implements angular.IController {
   }
 
   filterEntries(args: any): void {
+    console.log('filtering entries!');
     this.$state.go('.', {
       sortBy: this.entryListModifiers.sortBy.label,
       sortReverse: this.entryListModifiers.sortReverse,
@@ -306,6 +307,7 @@ export class LexiconEditorController implements angular.IController {
 
   resetEntryListFilter(): void {
     this.entryListModifiers.filterBy = null;
+    this.entryListModifiers.filterText = '';
     this.filterEntries(true);
   }
 

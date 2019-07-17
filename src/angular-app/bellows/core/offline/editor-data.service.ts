@@ -29,6 +29,7 @@ class EntryListModifiers {
   filterBy: FilterBy;
   filterOptions: any;
   filterType: string;
+  filterText: string;
 }
 
 export class EditorDataService {
@@ -46,7 +47,8 @@ export class EditorDataService {
     sortReverse: false,
     filterBy: null,
     filterOptions: {},
-    filterType: 'isNotEmpty'
+    filterType: 'isNotEmpty',
+    filterText: ''
   };
 
   private api: any;
@@ -274,7 +276,7 @@ export class EditorDataService {
   filterEntries = (shouldResetVisibleEntriesList: boolean): angular.IPromise<any> => {
     return this.sessionService.getSession().then(session => {
       const config = session.projectSettings<LexiconProjectSettings>().config;
-      if (this.entryListModifiers.filterBy) {
+      if (this.entryListModifiers.filterBy || this.entryListModifiers.filterText) {
         UtilityService.arrayCopyRetainingReferences(this.entries.filter((entry: any) => {
           return this.entryMeetsFilterCriteria(config, entry);
         }), this.filteredEntries);
@@ -398,7 +400,7 @@ export class EditorDataService {
   private entryMeetsFilterCriteria(config: any, entry: any): boolean {
     const mustNotBeEmpty = this.entryListModifiers.filterType === 'isNotEmpty';
     let containsData = false;
-    const filterType = this.entryListModifiers.filterBy.type;
+    const filterType = this.entryListModifiers.filterBy.type; // TODO this is the line that is causing errors
     if (['comments', 'exampleSentences', 'pictures', 'audio'].indexOf(filterType) !== -1) {
       // special filter types
       switch (filterType) {
@@ -498,7 +500,49 @@ export class EditorDataService {
       }
     }
 
-    return (mustNotBeEmpty && containsData || !mustNotBeEmpty && !containsData);
+    const blacklistKeys = [
+      'isDeleted',
+      'id',
+      'guid',
+      'translationGuid',
+      '$$hashKey',
+      'dateModified',
+      'dateCreated',
+      'projectId',
+      'authorInfo',
+      'fileName'
+    ];
+
+    const isBlacklisted = (key: string): boolean => {
+      const audio = '-audio';
+      return blacklistKeys.includes(key) || key.includes(audio, key.length - audio.length);
+    };
+
+    // TODO consider whitelisting all properties under customFields
+
+    const isMatch = (query: string, value: any): boolean => {
+      // toUpperCase is better than toLowerCase, but still has issues,
+      // e.g. 'ß'.toUpperCase() === 'SS'
+      const queryCapital = query.toUpperCase();
+      switch (value == null ? 'null' : typeof value) {
+        // Array.prototype.some tests whether some element satisfies the function
+        case 'object':
+          return Object.keys(value).some(key => !isBlacklisted(key) && isMatch(query, value[key]));
+        case 'string':
+          return value.toUpperCase().includes(queryCapital);
+        case 'null':
+          return false;
+        case 'boolean':
+          return false;
+        default:
+          console.error('Unexpected type ' + (typeof value) + ' on entry.');
+          return false;
+      }
+    };
+
+    const matchesSearch = isMatch(this.entryListModifiers.filterText, entry);
+
+    return matchesSearch && (mustNotBeEmpty && containsData || !mustNotBeEmpty && !containsData);
   }
 
   private getOptionListItem(optionlist: any, key: string): any {
